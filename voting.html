@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Vote Menu Favorit Anda By: KENAN</h1>
+
+        <!-- Menu Voting -->
+        <div class="menu">
+            <div class="item" onclick="vote('Mocktail')">
+                <img src="https://images.immediate.co.uk/production/volatile/sites/30/2020/04/mocktail-3b9ab7d.jpg?quality=90&webp=true&resize=300,272" alt="Mocktail" class="menu-image">
+                <p>Mocktail</p>
+            </div>
+            <div class="item" onclick="vote('Waffel')">
+                <img src="https://asset.kompas.com/crops/zBty5x5lBvUUZBBiwpUFldC-PYY=/0x0:1000x667/1200x800/data/photo/2021/06/02/60b7200ea10d9.jpg" alt="Waffel" class="menu-image">
+                <p>Waffel</p>
+            </div>
+            <div class="item" onclick="vote('Chiki Campur')">
+                <img src="https://images.tokopedia.net/img/cache/500-square/VqbcmM/2023/2/16/e07bd017-e50b-418d-a76c-67aa90a42e0a.jpg.webp?ect=4g" alt="Chiki Campur" class="menu-image">
+                <p>Chiki Campur</p>
+            </div>
+        </div>
+
+        <p id="message"></p>
+
+        <!-- Reset Voting -->
+        <div class="reset">
+            <button onclick="resetVoting()">Reset Voting</button>
+        </div>
+
+        <!-- Link ke data voting -->
+        <div class="results-link">
+            <a href="data.html">Lihat Hasil Voting</a>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi Voting
+        function vote(menu) {
+            // Cek apakah sudah pernah voting di device ini
+            if (localStorage.getItem('hasVoted') === 'true') {
+                document.getElementById('message').textContent = "Anda sudah voting sebelumnya!";
+                return;
+            }
+
+            // Ambil data hasil voting yang sudah ada dari localStorage
+            let votes = JSON.parse(localStorage.getItem('votes')) || { "Mocktail": 0, "Waffel": 0, "Chiki Campur": 0 };
+
+            // Tambah vote untuk menu yang dipilih
+            votes[menu] = votes[menu] + 1;
+
+            // Simpan kembali ke localStorage
+            localStorage.setItem('votes', JSON.stringify(votes));
+            localStorage.setItem('hasVoted', 'true');  // Tandai bahwa sudah melakukan voting
+
+            // Tampilkan pesan berhasil
+            document.getElementById('message').textContent = `Vote untuk ${menu} berhasil!`;
+        }
+
+        // Fungsi Reset Voting
+        function resetVoting() {
+            // Reset data voting jika password benar
+            let password = prompt("Masukkan password untuk mereset voting:");
+
+            if (password === "dreamlandkamar2qbsenakjasa") {  // Ganti dengan password yang Anda inginkan
+                localStorage.setItem('votes', JSON.stringify({ "Mocktail": 0, "Waffel": 0, "Chiki Campur": 0 }));
+                localStorage.removeItem('hasVoted');  // Reset status voting
+                alert("Voting berhasil direset!");
+            } else {
+                alert("Password salah. Tidak bisa mereset voting.");
+            }
+        }
+    </script>
+</body>
+</html>

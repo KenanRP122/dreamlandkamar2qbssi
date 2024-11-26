@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasil Voting</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Hasil Voting</h1>
+
+        <!-- Masukkan password untuk melihat data -->
+        <div id="password-section">
+            <label for="password">Masukkan Password untuk Melihat Hasil Voting:</label>
+            <input type="password" id="password" placeholder="Masukkan password">
+            <button onclick="viewResults()">Lihat Hasil</button>
+        </div>
+
+        <!-- Menampilkan hasil voting setelah password dimasukkan -->
+        <div id="results"></div>
+
+        <!-- Link kembali ke halaman voting -->
+        <div class="back-link">
+            <a href="voting.html">Kembali ke Voting</a>
+        </div>
+    </div>
+
+    <script>
+        function viewResults() {
+            const password = document.getElementById('password').value;
+            const correctPassword = 'dreamlandkamar2qbsmantapjasa';  // Ganti dengan password yang Anda inginkan
+
+            if (password === correctPassword) {
+                // Ambil data hasil voting dari localStorage
+                const resultsDiv = document.getElementById('results');
+                const votes = JSON.parse(localStorage.getItem('votes')) || { "Mocktail": 0, "Waffel": 0, "Chiki Campur": 0 };
+
+                // Tampilkan hasil voting
+                resultsDiv.innerHTML = '';
+                for (const menu in votes) {
+                    const count = votes[menu];
+                    resultsDiv.innerHTML += `<p>${menu}: ${count} suara</p>`;
+                }
+
+                // Sembunyikan input password setelah berhasil
+                document.getElementById('password-section').style.display = 'none';
+            } else {
+                alert("Password salah. Anda tidak dapat melihat hasil voting.");
+            }
+        }
+    </script>
+</body>
+</html>
